@@ -1,0 +1,24 @@
+{% if name %}
+    <ul>
+        <li>姓名</li>
+    {% for n in name %}
+        <li><a href="/assets/{{ n.name }}">{{ n.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <!-- <ul>
+        <li>部门</li>
+    {% for n in name %}
+        <li>{{ n.department }}</li>
+    {% endfor %}
+    </ul>
+
+    <ul>
+        <li>岗位</li>
+    {% for n in name %}
+        <li>{{ n.job_position }}</li>
+    {% endfor %}
+    </ul> -->
+{% else %}
+    <p>No persons.</p>
+{% endif %}
