@@ -1,0 +1,13 @@
+.page {
+    width: 80%;
+}
+
+th{
+    font-size: large;
+}
+
+tbody{
+    height: 60%;
+    margin: 1000px;
+    padding: 1000px;
+}

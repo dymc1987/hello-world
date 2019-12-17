@@ -1,0 +1,23 @@
+{% extends 'assets/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form action="{% url 'assets:modifyitem' %}" method="post">
+{% csrf_token %}
+<div class="form-group">
+    <label class="col-form-label" for="inputDefault">姓名</label>
+    <input type="text" class="form-control" placeholder="输入姓名" name="name" required>
+    <label class="col-form-label" for="inputDefault">部门</label>
+    <input type="text" class="form-control" placeholder="输入部门" name="department">
+    <label class="col-form-label" for="inputDefault">岗位</label>
+    <input type="text" class="form-control" placeholder="输入岗位" name="job_position">
+    <label class="col-form-label" for="inputDefault">计算机类型</label>
+    <input type="text" class="form-control" placeholder="输入计算机类型" name="pc_type" required>
+    <label class="col-form-label" for="inputDefault">SN码</label>
+    <input type="text" class="form-control" placeholder="输入SN码" name="sn" required>
+</div>
+<button type="submit" class="btn btn-primary btn-lg btn-block">更改</button>
+</form> 
+
+{% endblock %}

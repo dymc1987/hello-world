@@ -9,8 +9,8 @@ class Person(models.Model):
     department = models.CharField(max_length=10)
     job_position = models.CharField(max_length=20)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 
 class Pc_assets(models.Model):

@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+<div lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content=""><!doctype html>
+        <title>首页</title>
+            <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    </head>
+
+    <body>
+        <div class="container-fluid page">
+            <div class="jumbotron">
+                <h1 class="display-3">资产管理系统</h1>
+                <p class="lead">来这里轻松实现资产管理</p>
+                <hr class="my-4">
+                <p>你想执行哪些操作</p>
+                <p class="lead">
+                <a class="btn btn-primary btn-lg" href="{% url 'assets:add' %}" role="button">新增</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'assets:delete' %}" role="button">删除</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'assets:modify' %}" role="button">更改</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">查询</a>
+                </p>
+            </div>
+
+            {% block content %}
+
+            {% endblock %}
+        </div>
+
+    </body>
+</div>
+
