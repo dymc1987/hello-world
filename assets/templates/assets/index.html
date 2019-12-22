@@ -9,7 +9,7 @@
         <meta name="author" content=""><!doctype html>
         <title>首页</title>
             Bootstrap core CSS -->
-        <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/index.css' %}">
     
     </head> -->
@@ -27,34 +27,58 @@
 {% block content %}
 
 
-    <table class="table table-hover">
-        <thead class="th">
-            <tr>
+<table class="table table-hover">
+    <thead class="th">
+        <tr>
+            <th scope="col">序号</th>
             <th scope="col">姓名</th>
             <th scope="col">部门</th>
             <th scope="col">岗位</th>
             <th scope="col">电脑类型</th>
             <th scope="col">SN码</th>
-            </tr>
-        </thead>
-        {% if li %}
-            {% for l in li %} 
-                <tbody>
-                    <tr class= {{ l.class }} >
-                    <!-- <th scope="row">Active</th> -->
-                    <td>{{ l.name }}</td>
-                    <td>{{ l.department }}</td>
-                    <td>{{ l.job_position }}</td>
-                    <td>{{ l.pc_type }}</td>
-                    <td>{{ l.sn }}</td>
-                    </tr>
-                </tbody>
-            {% endfor %}
-        {% else %}
-            <p>No persons.</p>
-        {% endif %}
-    </table>  
-        <!-- <ul>
+        </tr>
+    </thead>
+    {% if li %}
+    {% for l in li %}
+    <tbody>
+        <tr class={{ l.class }}>
+            <!-- <th scope="row">Active</th> -->
+            <td id={{ l.num }} data-toggle="popover" title={{ l.name }}-{{ l.job_position}} data-content={{ l.sn }}>{{ l.num }}</td>
+            <td class="name">{{ l.name }}</td>
+            <td>{{ l.department }}</td>
+            <td>{{ l.job_position }}</td>
+            <td>{{ l.pc_type }}</td>
+            <td>{{ l.sn }}</td>
+        </tr>
+    </tbody>
+
+    <!-- <div class="modal fade" id={{ l.num }} tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+        <!-- 设置模态框的id为num值，以便被js调用 -->
+        <!-- <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{ l.name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                    <button type="button" class="btn btn-primary">{{ l.sn }}</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    {% endfor %}
+    {% else %}
+    <p>No persons.</p>
+    {% endif %}
+</table>
+<!-- <ul>
             <li>部门</li>
         {% for n in name %}
             <li>{{ n.department }}</li>
@@ -68,7 +92,7 @@
         {% endfor %}
         </ul> -->
 
-    <!-- <br>
+<!-- <br>
 
 
 
@@ -95,6 +119,41 @@
     <br>
     <input type="submit" value="Add">
     </form>  -->
+
+
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 
 

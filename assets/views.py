@@ -9,6 +9,7 @@ from .models import Person,Pc_assets
 def index(request):
     # return HttpResponse("Hello, You're at the assets index.")
     li = []
+    num = 1
     person = Person.objects.all()
     # 取出Person表中的所有对象
     for p in person:
@@ -18,6 +19,7 @@ def index(request):
         # 针对Pc_assets表中与Person表中对象相关联数据的条数(1对多关系)，
         # 对数据进行逐条组合，以便于使用
             dic = {
+                'num':num,
                 'name':p.name, 
                 'department':p.department,
                 'job_position':p.job_position,
@@ -25,7 +27,8 @@ def index(request):
                 # 取出列表中的字典，再根据字典的key，取出value
                 'sn':pc[i]['sn']
             }
-            li.append(dic)      
+            li.append(dic)
+            num += 1      
     i = 1
     for l in li:
         if i % 5 == 1:
