@@ -3,49 +3,16 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Person,Pc_assets
+from .format import format,pc_format
 
 # Create your views here.
 
+person = Person.objects.all()
+# 取出Person表中的所有对象
+
 def index(request):
-    # return HttpResponse("Hello, You're at the assets index.")
-    li = []
-    num = 1
-    person = Person.objects.all()
-    # 取出Person表中的所有对象
-    for p in person:
-        pc = p.pc_assets_set.all().values()
-        # 针对Person表中的每一个对象，去Pc_assets表中查询关联内容，并生成列表
-        for i in range(0,len(pc)):
-        # 针对Pc_assets表中与Person表中对象相关联数据的条数(1对多关系)，
-        # 对数据进行逐条组合，以便于使用
-            dic = {
-                'num':num,
-                'name':p.name, 
-                'department':p.department,
-                'job_position':p.job_position,
-                'pc_type':pc[i]['pc_type'],
-                # 取出列表中的字典，再根据字典的key，取出value
-                'sn':pc[i]['sn']
-            }
-            li.append(dic)
-            num += 1      
-    i = 1
-    for l in li:
-        if i % 5 == 1:
-            l['class'] = 'table-success'
-        elif i % 5 == 2:
-            l['class'] = 'table-danger'
-        elif i % 5 == 3:
-            l['class'] = 'table-warning'
-        elif i % 5 == 4:
-            l['class'] = 'table-info'
-        elif i % 5 == 0:
-            l['class'] = 'table-light'
-        else:
-            pass
-        i += 1  
-    # print(li) 
-    context = {'li':li}
+    context = format(person)
+    # 调用format函数，将人员信息格式化为想要的数据格式
     return render(request,'assets/index.html',context)
 
 def assets(request,person_name):
@@ -65,19 +32,26 @@ def delete(request):
 def modify(request):
     return render(request,'assets/modify.html')
 
+def query(request):
+    return render(request,'assets/query.html')
+
 def additem(request):
-    person = Person.objects.create(name=request.POST['name'])
-    person.department = request.POST['department']
-    person.job_position = request.POST['job_position']
-    person.save()
-    person.pc_assets_set.create(pc_type=request.POST['pc_type'],sn=request.POST['sn'])
+    if Person.objects.get(name=request.POST['name']):
+        person = Person.objects.get(name=request.POST['name'])
+        person.pc_assets_set.create(pc_type=request.POST['pc_type'],sn=request.POST['sn'])
+    else:
+        person = Person.objects.create(name=request.POST['name'])
+        person.department = request.POST['department']
+        person.job_position = request.POST['job_position']
+        person.save()
+        person.pc_assets_set.create(pc_type=request.POST['pc_type'],sn=request.POST['sn'])
     return HttpResponseRedirect(reverse('assets:index'))
 
 def deleteitem(request):
     if request.POST.get('name'):
         # 如果前端提交过来的是name信息
         # request.POST.get('name')与request.POST['name']作用相同，区别是前者允许前端提交过来
-        # 的数据不能为空，后者不允许为空，为空则会报错(也可以用try来规避这一问题)。
+        # 的数据为空，后者不允许为空，为空则会报错(也可以用try来规避这一问题)。
         person = Person.objects.get(name=request.POST['name'])
         person.delete()
     elif request.POST.get('sn'):
@@ -95,9 +69,27 @@ def modifyitem(request):
             'notification':'找不到这个用户',
         }
         return render(request,'assets/notice.html',context)
-    
 
-
-
-
+def queryitem(request):
+    if request.POST.get('name'):
+        person = Person.objects.filter(name=request.POST['name'])
+        # 根据前端提交的name，来查询人员信息，这里一定要用filter
+        context = format(person)
+        # 调用format函数，将人员信息格式化为想要的数据格式
+        return render(request,'assets/index.html',context)
+    elif request.POST.get('department'):
+        person = Person.objects.filter(department=request.POST['department'])
+        context = format(person)
+        return render(request,'assets/index.html',context)
+    elif request.POST.get('sn'):
+        pc = Pc_assets.objects.filter(sn=request.POST['sn'])
+        # 用filter，即便只有一个数据，也会是iterator，可直接用于for循环
+        # li = []
+        # li.append(pc)
+        context = pc_format(pc)
+        return render(request,'assets/index.html',context)
+    elif request.POST.get('pc_type'):
+        pc = Pc_assets.objects.filter(pc_type=request.POST['pc_type'])
+        context = pc_format(pc)
+        return render(request,'assets/index.html',context)
 

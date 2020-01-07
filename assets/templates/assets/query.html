@@ -1,0 +1,64 @@
+{% extends 'assets/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<fieldset>
+    <legend>选择查询方式</legend>
+    <div class="form-group">
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
+        <label class="custom-control-label" for="customRadio1">按照人员查询</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">按照部门查询</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio3">按照SN码查询</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio4">按照计算机类型查询</label>
+      </div>
+    </div>
+</fieldset>
+<form action="{% url 'assets:queryitem' %}" method="post">
+    {% csrf_token %}
+    <label class="col-form-label" for="inputDefault">姓名</label>
+    <input type="text" class="form-control" placeholder="输入姓名" name="name">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">查询</button>
+</form> 
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/query.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
